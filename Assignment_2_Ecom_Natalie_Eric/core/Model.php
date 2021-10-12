@@ -1,5 +1,5 @@
 <?php
-namespace app\core;
+namespace Assignment_2_Ecom_Natalie_Eric\core;
 
 class Model{
 
