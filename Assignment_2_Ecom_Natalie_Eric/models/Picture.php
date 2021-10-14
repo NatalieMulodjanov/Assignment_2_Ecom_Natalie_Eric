@@ -25,4 +25,10 @@ class Picture extends \Assignment_2_Ecom_Natalie_Eric\core\Model{
         $STMT->setFetchMode(\PDO::FETCH_CLASS, '\\Assignment_2_Ecom_Natalie_Eric\\models\\Picture');
         return $STMT->fetch();
     }
+
+    public function insert(){
+        $SQL = 'INSERT INTO picture(profile_id, file_name, caption) VALUES :profile_id, :file_name, :caption';
+        $STMT = self::$_connection->prepare($SQL);
+        $STMT->execute(['profile_id' => $this->profile_id, 'file_name' => $this->file_name, 'caption' => $this->caption]);
+    }
 }
