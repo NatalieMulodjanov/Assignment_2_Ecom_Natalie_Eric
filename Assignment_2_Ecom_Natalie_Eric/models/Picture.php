@@ -31,4 +31,10 @@ class Picture extends \Assignment_2_Ecom_Natalie_Eric\core\Model{
         $STMT = self::$_connection->prepare($SQL);
         $STMT->execute(['profile_id' => $this->profile_id, 'file_name' => $this->file_name, 'caption' => $this->caption]);
     }
+
+    public function delete($picture_id){
+        $SQL = 'DELETE FROM picture WHERE picture_id = :picture_id';
+        $STMT = self::$_connection->prepare($SQL);
+        $STMT->execute(['picture_id' => $picture_id]);
+    }
 }
