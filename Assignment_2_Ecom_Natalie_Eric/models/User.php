@@ -1,7 +1,7 @@
 <?php
 namespace app\models;
 
-class User extends \app\core\Model{
+class User extends \Assignment_2_Ecom_Natalie_Eric\core\Model{
 	public $user_id;
 	public $username;
 	public $password_hash;
@@ -14,7 +14,7 @@ class User extends \app\core\Model{
 	public function getAll(){
 		$SQL = 'SELECT * FROM user';
 		$STMT = self::$_connection->query($SQL);
-		$STMT->setFetchMode(\PDO::FETCH_CLASS,'app\\models\\User');
+		$STMT->setFetchMode(\PDO::FETCH_CLASS,'Assignment_2_Ecom_Natalie_Eric\\models\\User');
 		return $STMT->fetchAll();
 	}
 
@@ -22,7 +22,7 @@ class User extends \app\core\Model{
 		$SQL = 'SELECT * FROM user WHERE user_id = :user_id';
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute(['user_id'=>$user_id]);
-		$STMT->setFetchMode(\PDO::FETCH_CLASS,'app\\models\\User');
+		$STMT->setFetchMode(\PDO::FETCH_CLASS,'Assignment_2_Ecom_Natalie_Eric\\models\\User');
 		return $STMT->fetch();
 	}
 
