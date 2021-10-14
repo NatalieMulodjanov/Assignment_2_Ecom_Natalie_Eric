@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 12, 2021 at 11:24 PM
+-- Generation Time: Oct 14, 2021 at 10:42 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.10
 
@@ -94,16 +94,8 @@ CREATE TABLE `user` (
   `user_id` int(10) NOT NULL,
   `username` varchar(25) NOT NULL,
   `password_hash` varchar(72) NOT NULL,
-  `2_factor_authentication_token` varchar(255) NOT NULL
+  `two_factor_authentication_token` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `user`
---
-
-INSERT INTO `user` (`user_id`, `username`, `password_hash`, `2_factor_authentication_token`) VALUES
-(3, 'natalie', 'test', 'test'),
-(5, 'test', 'test', 'test');
 
 --
 -- Indexes for dumped tables
