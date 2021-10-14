@@ -18,5 +18,11 @@ class Picture extends \Assignment_2_Ecom_Natalie_Eric\core\Model{
         return $STMT->fetchAll();
     }
 
-    
+    public function get($picture_id){
+        $SQL = 'SELECT * FROM picture WHERE picture_id = :picture_id';
+        $STMT = self::$_connection->prepare($SQL);
+        $STMT->execute(['picture_id' => $picture_id]);
+        $STMT->setFetchMode(\PDO::FETCH_CLASS, '\\Assignment_2_Ecom_Natalie_Eric\\models\\Picture');
+        return $STMT->fetch();
+    }
 }
