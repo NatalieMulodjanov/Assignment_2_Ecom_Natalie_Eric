@@ -1,7 +1,7 @@
 <?php
 namespace app\models;
 
-class User extends \Assignment_2_Ecom_Natalie_Eric\core\Model{
+class User extends \app\core\Model{
 	public $user_id;
 	public $username;
 	public $password_hash;
@@ -14,7 +14,7 @@ class User extends \Assignment_2_Ecom_Natalie_Eric\core\Model{
 	public function getAll(){
 		$SQL = 'SELECT * FROM user';
 		$STMT = self::$_connection->query($SQL);
-		$STMT->setFetchMode(\PDO::FETCH_CLASS,'Assignment_2_Ecom_Natalie_Eric\\models\\User');
+		$STMT->setFetchMode(\PDO::FETCH_CLASS,'app\\models\\User');
 		return $STMT->fetchAll();
 	}
 
@@ -22,14 +22,14 @@ class User extends \Assignment_2_Ecom_Natalie_Eric\core\Model{
 		$SQL = 'SELECT * FROM user WHERE user_id = :user_id';
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute(['user_id'=>$user_id]);
-		$STMT->setFetchMode(\PDO::FETCH_CLASS,'Assignment_2_Ecom_Natalie_Eric\\models\\User');
+		$STMT->setFetchMode(\PDO::FETCH_CLASS,'app\\models\\User');
 		return $STMT->fetch();
 	}
 
 	public function insert(){
 		$SQL = 'INSERT INTO user(username, password_hash, two_factor_authentication_token) VALUES (:username, :password_hash, :two_factor_authentication_token)';
 		$STMT = self::$_connection->prepare($SQL);
-		$STMT->execute(['username'=>$this->username,'password_hash'=>$this->password_hash,'passwortwo_factor_authentication_tokend_hash'=>$this->two_factor_authentication_token]);
+		$STMT->execute(['username'=>$this->username,'password_hash'=>$this->password_hash,'two_factor_authentication_tokend_hash'=>$this->two_factor_authentication_token]);
 	}
 
 	public function update(){

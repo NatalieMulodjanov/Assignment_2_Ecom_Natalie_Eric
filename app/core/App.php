@@ -1,10 +1,10 @@
 <?php
 
-namespace Assignment_2_Ecom_Natalie_Eric\core;
+namespace app\core;
 
 class App{
 
-	private $controller = 'app\\controllers\\Main'; 
+	private $controller = 'app\\controllers\\User'; 
 	private $method = 'index';
 	private $params = [];
 

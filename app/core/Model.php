@@ -1,5 +1,5 @@
 <?php
-namespace Assignment_2_Ecom_Natalie_Eric\core;
+namespace app\core;
 
 class Model{
 
@@ -9,7 +9,7 @@ class Model{
 		$username = 'root';
 		$password = '';
 		$host = 'localhost';//where we find the MySQL DB server
-		$DBname = 'myApplication'; //the DB name for your Web application
+		$DBname = 'social_media_application'; //the DB name for your Web application
 
 
 		//connect the objects to the storage medium
