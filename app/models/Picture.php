@@ -38,7 +38,7 @@ class Picture extends \app\core\Model{
         $STMT->execute(['picture_id' => $picture_id]);
     }
 
-    //TODO: check if all instance variables should be updaeted, check if update is needed.
+    //TODO: check if all instance variables should be updated, check if update is needed.
     public function update(){
         $SQL = 'UPDATE picture SET picture_id = :picture_id, profile_id = :profile_id, file_name = :file_name, caption = :caption WHERE picture_id = :picture_id';
         $STMT = self::$_connection->prepare($SQL);
