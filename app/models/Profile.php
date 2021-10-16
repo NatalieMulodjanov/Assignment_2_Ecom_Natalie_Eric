@@ -14,9 +14,9 @@ class Profile extends \app\core\Model{
     }
     
     public function create(){
-        $SQL = 'INSERT INTO profile (user_id, first_name, middle_name, last_name) VALUES :user_id, :first_name, :middle_name, :last_name,';
+        $SQL = 'INSERT INTO profile (user_id, first_name, middle_name, last_name) VALUES (:user_id, :first_name, :middle_name, :last_name)';
         $STMT = self::$_connection->prepare($SQL);
-        $STMT->execute(['user_id' => $this->user_id, 'first_ name' => $this->first_name, 'moddle_name' => $this->middle_name, 'last_name' => $this->last_name]);
+        $STMT->execute(['user_id' => $this->user_id, 'first_name' => $this->first_name, 'middle_name' => $this->middle_name, 'last_name' => $this->last_name]);
     }
 
 

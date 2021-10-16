@@ -4,7 +4,7 @@ namespace app\controllers;
 class Profile extends \app\core\Controller{
     //is called when loggs in and doesnt have a profile 
     public function create($user_id){
-        if (isset($_POST('action'))){
+        if (isset($_POST['action'])){
             $profile = new \app\models\Profile();
             $profile->user_id = $user_id;
             $profile->first_name = $_POST['first_name'];
