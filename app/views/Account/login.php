@@ -5,7 +5,7 @@
 		echo $data;
 	}
 ?>
-<a href="/Assignment2/User/register">Create a new User</a><br>
+<a href="<?=BASE?>/User/register">Create a new User</a><br>
 Login
 <form action='' method='post'>
 	Username: <input type='text' name='username' /><br>

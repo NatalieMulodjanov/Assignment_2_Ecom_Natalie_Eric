@@ -9,7 +9,20 @@ class User extends \app\core\Controller{
 	}
 
 	public function login(){
-		$this->view('Account/login');
+		if(isset($_POST['action'])){
+			$user = new \app\models\User();
+			$user = $user->get($_POST['username']);
+
+			if($user!=false && password_verify($_POST['password'], $user->password_hash)){
+				$_SESSION['user_id'] = $user->user_id;
+				$_SESSION['username'] = $user->username;
+				echo 'go to wall';
+			}else{
+				$this->view('Account/login','Wrong username and password combination!');
+			}
+
+		}else
+			$this->view('Account/login');
 	}
 
 	public function register(){
