@@ -1,11 +1,15 @@
 <html>
-<head><title>Profile</title></head><body>
 
-<table>
-	<tr><th>Username</th></tr>
-<?php
+<head>
+	<title>Profile</title>
+</head>
 
-?>
-</table>
+<body>
+	<h2>First name</h2>
+	<?php
+		echo "<h3>$data->first_name</h3>"
+	?>
+
 </body>
+
 </html>
