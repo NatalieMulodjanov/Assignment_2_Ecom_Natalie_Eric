@@ -3,14 +3,15 @@ namespace app\controllers;
 
 class Profile extends \app\core\Controller{
     //is called when loggs in and doesnt have a profile 
-    public function create($user_id){
+    #[\app\filters\Login]
+    public function create(){
         if (isset($_POST['action'])){
             $profile = new \app\models\Profile();
-            $profile->user_id = $user_id;
+            $profile->user_id =  $_SESSION['user_id'];
             $profile->first_name = $_POST['first_name'];
             $profile->middle_name = $_POST['middle_name'];
             $profile->last_name = $_POST['last_name'];
-
+           
             $profile->create();
             header('location:'.BASE.'Profile/index');
         }else {
@@ -19,7 +20,17 @@ class Profile extends \app\core\Controller{
 
     }
 
+	#[\app\filters\Login]
     public function index(){
+        $user_id = $_SESSION['user_id'];
+        $profile = new \app\models\Profile();
+        $profile = $profile->get($user_id);
+        
+        if ($profile == false){
+            header('location:'.BASE.'Profile/create');
+        } else {
+            $this->view('Profile/wall', $profile);
+        }
 
     }
 }
