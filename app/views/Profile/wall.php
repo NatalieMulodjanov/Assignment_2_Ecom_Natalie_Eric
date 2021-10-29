@@ -16,7 +16,7 @@
 <table>
 	<tr><th>From</th><th>Message</th><th>Timestamp</th><th>Actions</th></tr>
 <?php
-foreach($data as $message){
+foreach($data(messages) as $message){
 
 	echo "<tr>
 			<td>$message->sender</td>
