@@ -33,4 +33,27 @@ class Profile extends \app\core\Controller{
         }
 
     }
+
+    #[\app\filters\Login]
+    public function update(){
+        $user_id = $_SESSION['user_id'];
+        $profile = new \app\models\Profile();
+        $profile = $profile->get($user_id);
+        
+        if(isset($_POST['action'])){
+			$profile->setFirst_name($_POST['first_name']);
+			$profile->setMiddle_name($_POST['middle_name']);
+            $profile->setLast_name($_POST['last_name']);
+			$profile->update();
+			header('location:'.BASE.'Profile/wall');
+		}else
+			$this->view('Profile/update',$profile);
+    }
+
+    public function read(){
+        $user_id = $_SESSION['user_id'];
+        $profile = new \app\models\Profile();
+        $profile = $profile->get($user_id);
+        
+    }
 }
