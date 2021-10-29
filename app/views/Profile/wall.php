@@ -4,6 +4,8 @@
 	<title>Profile</title>
 </head>
 
+<a href="<?=BASE?>Profile/insert">Create a new animal</a>
+
 <body>
 	<h2>First name</h2>
 	<?php
