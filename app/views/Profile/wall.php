@@ -5,6 +5,7 @@
 </head>
 
 <a href="<?=BASE?>Profile/update">Update Profile</a>
+<a href="<?=BASE?>User/logout">Logout</a>
 
 <body>
 	<h2>First name</h2>

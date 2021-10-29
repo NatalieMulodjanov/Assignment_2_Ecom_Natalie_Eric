@@ -39,4 +39,8 @@ class User extends \app\core\Controller{
 			$this->view('Account/register');
 	}
 	
+	public function logout(){
+		session_destroy();
+		header('location:'.BASE.'User/login');
+	}
 }
