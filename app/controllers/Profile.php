@@ -25,15 +25,13 @@ class Profile extends \app\core\Controller{
         $user_id = $_SESSION['user_id'];
         $profile = new \app\models\Profile();
         $profile = $profile->get($user_id);
-        $allMessages = new \app\models\Message();
-        $allMessages = $allMessages->getAll();
-        $messages = new \app\models\Message();
-        $messages = $messages->getAllFromReceiver($allMessages, $profile->profile_id);
+        $message =  new \app\models\Message();
+        $allMessages = $message->getAllMessagesFromProfileId($profile->profile_id);
         
         if ($profile == false){
             header('location:'.BASE.'Profile/create');
         } else {
-            $this->view('Profile/wall', $profile, $messages);
+            $this->view('Profile/wall', $profile, $allMessages);
         }
 
     }
