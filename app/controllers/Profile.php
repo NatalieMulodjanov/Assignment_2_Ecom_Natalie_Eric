@@ -43,9 +43,15 @@ class Profile extends \app\core\Controller{
         $profile = $profile->get($user_id);
         
         if(isset($_POST['action'])){
-			$profile->setFirst_name($_POST['first_name']);
-			$profile->setMiddle_name($_POST['middle_name']);
-            $profile->setLast_name($_POST['last_name']);
+            if($_POST['first_name'] != ''){
+                $profile->setFirst_name($_POST['first_name']);
+            }
+            if($_POST['middle_name'] != ''){
+                $profile->setMiddle_name($_POST['middle_name']);
+            }
+            if($_POST['last_name'] != ''){
+                $profile->setLast_name($_POST['last_name']);
+            }
 			$profile->update();
 			header('location:'.BASE.'Profile/wall');
 		}else
