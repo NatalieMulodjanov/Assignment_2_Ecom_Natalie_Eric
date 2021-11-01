@@ -27,8 +27,10 @@ foreach($data['messages'] as $message){
 			<td>$message->sender</td>
 			<td>$message->message</td>
 			<td>$message->timestamp</td>
+			<td>$message->read_status</td>
 			<td>
-				<a href='".BASE."Profile/read/$message->message_id'>read</a>
+				<a href='".BASE."Message/read/$message->message_id'>read</a>
+				<a href='".BASE."Message/to_reread/$message->message_id'>to reread</a>
 			</td>
 		</tr>";
 }

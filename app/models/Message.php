@@ -21,12 +21,18 @@ class Message extends \app\core\Model{
         $STMT->execute(['message_id' => $this->message_id,'sender' => $this->sender, 'receiver' => $this->receiver, 'message' => $this->message, 'timestamp' => $this->timestamp, 'read_status' => $this->read_status, 'private_status' => $this->private_status]);
     }
 
-    //Pointless
-    public function getAll(){
-		$SQL = 'SELECT * FROM message';
+    public function get($message_id){
+		$SQL = 'SELECT * FROM message WHERE message_id = :message_id';
 		$STMT = self::$_connection->query($SQL);
+        $STMT->execute(['message_id' => $message_id]);
 		$STMT->setFetchMode(\PDO::FETCH_CLASS,'app\\models\\Message');
-		return $STMT->fetchAll();
+		return $STMT->fetch();
+	}
+
+    public function updateRead_status(){
+		$SQL = 'UPDATE `message` SET `read_Status`=:read_Status WHERE message_id = :message_id';
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['read_Status'=>$this->read_Status]);
 	}
 
     public function getAllMessagesFromProfileId($profile_id){
