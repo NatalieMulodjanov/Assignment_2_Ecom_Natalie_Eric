@@ -28,6 +28,8 @@
 			<th>From</th>
 			<th>Message</th>
 			<th>Timestamp</th>
+			<th>Read Status</th>
+			<th>Private Status</th>
 			<th>Actions</th>
 		</tr>
 		<?php
@@ -41,6 +43,7 @@
 			<td>$message->message</td>
 			<td>$convertedTimeStamp</td>
 			<td>$message->read_status</td>
+			<td>$message->private_status</td>
 			<td>
 				<a href='".BASE."Message/read/$message->message_id'>read</a>
 				<a href='".BASE."Message/to_reread/$message->message_id'>to reread</a>
