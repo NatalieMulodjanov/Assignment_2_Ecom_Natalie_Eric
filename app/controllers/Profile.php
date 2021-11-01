@@ -26,7 +26,7 @@ class Profile extends \app\core\Controller{
     public function index(){
         $user_id = $_SESSION['user_id'];
         $profile = new \app\models\Profile();
-        $profile = $profile->get($user_id);
+        $profile = $profile->getByUserId($user_id);
         $message =  new \app\models\Message();
         
         $messages = $message->getAllMessagesFromProfileId($profile->profile_id);
@@ -48,7 +48,7 @@ class Profile extends \app\core\Controller{
         if(isset($_POST['action'])){
             $profile_id = $_POST['profile_id'];
             $profile = new \app\models\Profile();
-            $profile = $profile->get($user_id);
+            $profile = $profile->get($profile_id);
 
             if($user_id == $profile->user_id){
                 $messages = $message->getAllMessagesFromProfileId($profile->profile_id);
@@ -68,7 +68,7 @@ class Profile extends \app\core\Controller{
     public function update(){
         $user_id = $_SESSION['user_id'];
         $profile = new \app\models\Profile();
-        $profile = $profile->get($user_id);
+        $profile = $profile->getByUserId($user_id);
         
         if(isset($_POST['action'])){
             if($_POST['first_name'] != ''){
@@ -85,12 +85,12 @@ class Profile extends \app\core\Controller{
 		}else
 			$this->view('Profile/update',$profile);
     }
-    
+
     #[\app\filters\Login]
     public function read(){
         $user_id = $_SESSION['user_id'];
         $profile = new \app\models\Profile();
-        $profile = $profile->get($user_id);
+        $profile = $profile->getByUserId($user_id);
         
     }
 }

@@ -19,7 +19,7 @@ class Picture extends \app\core\Model{
 		$this->caption = $caption;
 	}
 
-    public function getAll(){
+    public function getAll($profile_id){
         $SQL = 'SELECT * FROM picture WHERE profile_id = :profile_id';
         $STMT = self::$_connection->query($SQL);
         $STMT->execute(['profile_id' => $profile_id]);

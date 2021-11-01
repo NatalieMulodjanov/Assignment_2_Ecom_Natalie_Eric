@@ -33,8 +33,11 @@
 		<?php
 		foreach ($data['messages'] as $message) {
 			$convertedTimeStamp = \app\core\helpers\Helper::ConvertDateTime($message->timestamp);
+			$senderProfile = new \app\models\Profile();
+			$senderProfile = $senderProfile->get($message->sender);
+			
 			echo "<tr>
-			<td>$message->sender</td>
+			<td>$senderProfile->first_name $senderProfile->last_name</td>
 			<td>$message->message</td>
 			<td>$convertedTimeStamp</td>
 			<td>$message->read_status</td>
