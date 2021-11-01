@@ -16,7 +16,7 @@
 <table>
 	<tr><th>From</th><th>Message</th><th>Timestamp</th><th>Actions</th></tr>
 <?php
-foreach($data(messages) as $message){
+foreach($data as $message){
 
 	echo "<tr>
 			<td>$message->sender</td>
@@ -29,6 +29,8 @@ foreach($data(messages) as $message){
 }
 ?>
 </table>
+
+
 
 </body>
 </html>
