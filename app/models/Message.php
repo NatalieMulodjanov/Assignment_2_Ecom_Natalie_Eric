@@ -23,7 +23,7 @@ class Message extends \app\core\Model{
 	}
 
     public function getAllMessagesFromProfileId($profile_id){
-        $SQL = 'SELECT * FROM message WHERE profile_id = :profile_id';
+        $SQL = 'SELECT * FROM message WHERE receiver = :profile_id';
         $STMT = self::$_connection->prepare($SQL);
         $STMT->execute(['profile_id' => $profile_id]);
         $STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\\models\\Message');

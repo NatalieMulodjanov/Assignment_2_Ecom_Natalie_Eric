@@ -31,7 +31,7 @@ class Profile extends \app\core\Controller{
         if ($profile == false){
             header('location:'.BASE.'Profile/create');
         } else {
-            $this->view('Profile/wall', $profile, $allMessages);
+            $this->view('Profile/wall',$allMessages);
         }
 
     }
