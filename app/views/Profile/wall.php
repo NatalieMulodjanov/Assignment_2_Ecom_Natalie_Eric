@@ -5,18 +5,20 @@
 </head>
 
 <a href="<?=BASE?>Profile/update">Update Profile</a>
+<a href="<?=BASE?>Message/create/$data[profile]">Create Message</a>
 <a href="<?=BASE?>User/logout">Logout</a>
 
 <body>
 	<h2>First name</h2>
 	<?php
-		echo "<h3>$data->first_name</h3>"
+		$profile = $data['profile'];
+		echo "<h3>$profile->first_name</h3>";
 	?>
 
 <table>
 	<tr><th>From</th><th>Message</th><th>Timestamp</th><th>Actions</th></tr>
 <?php
-foreach($data as $message){
+foreach($data['messages'] as $message){
 
 	echo "<tr>
 			<td>$message->sender</td>

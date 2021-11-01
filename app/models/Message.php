@@ -15,6 +15,12 @@ class Message extends \app\core\Model{
         parent::__construct();
     }
 
+    public function create(){
+        $SQL = 'INSERT INTO message (message_id, sender, receiver, message, timestamp, read_status, private_status) VALUES (:message_id, :sender, :receiver, :message, :timestamp, :read_status, :private_status)';
+        $STMT = self::$_connection->prepare($SQL);
+        $STMT->execute(['message_id' => $this->message_id,'sender' => $this->sender, 'receiver' => $this->receiver, 'message' => $this->message, 'timestamp' => $this->timestamp, 'read_status' => $this->read_status, 'private_status' => $this->private_status]);
+    }
+
     public function getAll(){
 		$SQL = 'SELECT * FROM message';
 		$STMT = self::$_connection->query($SQL);
@@ -23,7 +29,7 @@ class Message extends \app\core\Model{
 	}
 
     public function getAllMessagesFromProfileId($profile_id){
-        $SQL = 'SELECT * FROM message WHERE profile_id = :profile_id';
+        $SQL = 'SELECT * FROM message WHERE receiver = :profile_id';
         $STMT = self::$_connection->prepare($SQL);
         $STMT->execute(['profile_id' => $profile_id]);
         $STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\\models\\Message');
@@ -48,9 +54,5 @@ class Message extends \app\core\Model{
     //     return $results;
 	// }
     
-    // public function create(){
-    //     $SQL = 'INSERT INTO profile (user_id, first_name, middle_name, last_name) VALUES (:user_id, :first_name, :middle_name, :last_name)';
-    //     $STMT = self::$_connection->prepare($SQL);
-    //     $STMT->execute(['user_id' => $this->user_id, 'first_name' => $this->first_name, 'middle_name' => $this->middle_name, 'last_name' => $this->last_name]);
-    // }
+    
 }

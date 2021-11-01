@@ -26,12 +26,12 @@ class Profile extends \app\core\Controller{
         $profile = new \app\models\Profile();
         $profile = $profile->get($user_id);
         $message =  new \app\models\Message();
-        $allMessages = $message->getAllMessagesFromProfileId($profile->profile_id);
+        $messages = $message->getAllMessagesFromProfileId($profile->profile_id);
         
         if ($profile == false){
             header('location:'.BASE.'Profile/create');
         } else {
-            $this->view('Profile/wall', $profile, $allMessages);
+            $this->view('Profile/wall',['profile'=>$profile, 'messages'=>$messages]);
         }
 
     }
@@ -43,11 +43,17 @@ class Profile extends \app\core\Controller{
         $profile = $profile->get($user_id);
         
         if(isset($_POST['action'])){
-			$profile->setFirst_name($_POST['first_name']);
-			$profile->setMiddle_name($_POST['middle_name']);
-            $profile->setLast_name($_POST['last_name']);
+            if($_POST['first_name'] != ''){
+                $profile->setFirst_name($_POST['first_name']);
+            }
+            if($_POST['middle_name'] != ''){
+                $profile->setMiddle_name($_POST['middle_name']);
+            }
+            if($_POST['last_name'] != ''){
+                $profile->setLast_name($_POST['last_name']);
+            }
 			$profile->update();
-			header('location:'.BASE.'Profile/wall');
+			header('location:'.BASE.'Profile/index');
 		}else
 			$this->view('Profile/update',$profile);
     }
