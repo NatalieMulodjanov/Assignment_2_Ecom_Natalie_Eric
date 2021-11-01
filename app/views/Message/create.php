@@ -4,6 +4,8 @@
     </head>
 
     <body>
+        <a href="<?=BASE?>Profile/index">Return</a>
+
         <form action="" method ="post">
             <label>Enter Profile</label><input type="text" name="receiver"><br>
             <label>Enter Message</label><input type="text" name="message"><br>

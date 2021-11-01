@@ -37,8 +37,8 @@ class Message extends \app\core\Model{
         return $STMT->fetchAll();
     }
 
-    public function getPrivateMessagesFromProfileId($profile_id){
-        $SQL = "SELECT * FROM message WHERE receiver = :profile_id AND private_status = 'private' ";
+    public function getPublicMessagesFromProfileId($profile_id){
+        $SQL = "SELECT * FROM message WHERE receiver = :profile_id AND private_status = 'public' ";
         $STMT = self::$_connection->prepare($SQL);
         $STMT->execute(['profile_id' => $profile_id]);
         $STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\\models\\Message');
