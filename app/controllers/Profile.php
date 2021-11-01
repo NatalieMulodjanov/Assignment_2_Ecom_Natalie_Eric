@@ -28,6 +28,7 @@ class Profile extends \app\core\Controller{
         $profile = new \app\models\Profile();
         $profile = $profile->get($user_id);
         $message =  new \app\models\Message();
+        
         $messages = $message->getAllMessagesFromProfileId($profile->profile_id);
         
         if ($profile == false){
@@ -40,6 +41,27 @@ class Profile extends \app\core\Controller{
 
     #[\app\filters\Login]
     #[\app\filters\Validate]
+    public function goToProfile(){
+        $user_id = $_SESSION['user_id'];
+        $message =  new \app\models\Message();
+
+        if(isset($_POST['action'])){
+            $profile = $_POST['profile_id'];
+            if($user_id == $profile->user_id){
+                $messages = $message->getAllMessagesFromProfileId($profile->profile_id);
+                $this->view('Profile/wall',['profile'=>$profile, 'messages'=>$messages]);
+            } else{
+                $messages = $message->getPublicMessagesFromProfileId($profile->profile_id);
+                $this->view('Profile/wall',['profile'=>$profile, 'messages'=>$messages]);
+            }
+		}else
+			$this->view('Profile/goToProfile');
+
+        
+    }
+
+
+    #[\app\filters\Login]
     public function update(){
         $user_id = $_SESSION['user_id'];
         $profile = new \app\models\Profile();

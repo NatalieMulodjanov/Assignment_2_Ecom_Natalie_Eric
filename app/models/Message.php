@@ -21,6 +21,7 @@ class Message extends \app\core\Model{
         $STMT->execute(['message_id' => $this->message_id,'sender' => $this->sender, 'receiver' => $this->receiver, 'message' => $this->message, 'timestamp' => $this->timestamp, 'read_status' => $this->read_status, 'private_status' => $this->private_status]);
     }
 
+    //Pointless
     public function getAll(){
 		$SQL = 'SELECT * FROM message';
 		$STMT = self::$_connection->query($SQL);
@@ -37,22 +38,10 @@ class Message extends \app\core\Model{
     }
 
     public function getPublicMessagesFromProfileId($profile_id){
-        $SQL = "SELECT * FROM messges WHERE profile_id = :profile_id AND private_status = 'public' ";
+        $SQL = "SELECT * FROM message WHERE receiver = :profile_id AND private_status = 'public' ";
         $STMT = self::$_connection->prepare($SQL);
         $STMT->execute(['profile_id' => $profile_id]);
         $STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\\models\\Message');
         return $STMT->fetchAll();
     }
-
-    // public function getAllFromReceiver($allMessages,$profile_id){
-    //     $results = new Message();
-    //     foreach($allMessages as $message){
-    //         if($message->receiver == $profile_id){
-    //             $results = $message;
-    //         }
-    //     }
-    //     return $results;
-	// }
-    
-    
 }

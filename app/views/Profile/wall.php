@@ -18,10 +18,10 @@
 <a href="<?= BASE ?>User/logout">Logout</a>
 
 <body>
-	<h2>First name</h2>
+	<h2>Profile Name</h2>
 	<?php
-	$profile = $data['profile'];
-	echo "<h3>$profile->first_name</h3>";
+		$profile = $data['profile'];
+		echo "<h3>$profile->first_name $profile->middle_name $profile->last_name</h3>";
 	?>
 
 	<table>
