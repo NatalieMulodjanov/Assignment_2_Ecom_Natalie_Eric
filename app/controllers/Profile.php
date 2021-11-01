@@ -53,7 +53,7 @@ class Profile extends \app\core\Controller{
                 $profile->setLast_name($_POST['last_name']);
             }
 			$profile->update();
-			header('location:'.BASE.'Profile/wall');
+			header('location:'.BASE.'Profile/index');
 		}else
 			$this->view('Profile/update',$profile);
     }

@@ -5,10 +5,10 @@
 
     <body>
         <form action="" method ="post">
-            <label>Enter First Name</label><input type="text" name="first_name"><br>
-            <label>Enter Middle Name</label><input type="text" name="middle_name"><br>
-            <label>Enter Last Name</label><input type="text" name="last_name"> <br>
-            <input type="submit" name='action' value='Create Profile'>
+            <label>Enter Profile</label><input type="text" name="receiver"><br>
+            <label>Enter Message</label><input type="text" name="message"><br>
+            <label>Enter Private Status</label><input type="text" name="private_status"> <br>
+            <input type="submit" name='action' value='Create Message'>
         </form>
     </body>
 </html>
