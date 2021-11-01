@@ -6,13 +6,19 @@
 
 <a href="<?=BASE?>Profile/update">Update Profile</a>
 <a href="<?=BASE?>Message/create/$data[profile]">Create Message</a>
-<a href="<?=BASE?>User/logout">Logout</a>
+<a href="<?=BASE?>User/logout">Logout</a><br><br>
+
+<a>Search Profile</a>
+<form action="" method ="post">
+    <label>Enter Profile ID</label><input type="text" name="profile_id"> <br>
+    <input type="submit" name='action' value='Enter'>
+</form>
 
 <body>
-	<h2>First name</h2>
+	<h2>Profile Name</h2>
 	<?php
 		$profile = $data['profile'];
-		echo "<h3>$profile->first_name</h3>";
+		echo "<h3>$profile->first_name ($profile->middle_name) $profile->last_name</h3>";
 	?>
 
 <table>
