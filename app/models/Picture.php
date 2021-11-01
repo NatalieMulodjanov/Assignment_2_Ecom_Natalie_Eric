@@ -11,9 +11,18 @@ class Picture extends \app\core\Model{
         parent::__construct();
     }
 
+    public function getCaption(){
+		return $this->caption;
+	}
+
+    public function setCaption($caption){
+		$this->caption = $caption;
+	}
+
     public function getAll(){
-        $SQL = 'SELECT * FROM picture';
+        $SQL = 'SELECT * FROM picture WHERE profile_id = :profile_id';
         $STMT = self::$_connection->query($SQL);
+        $STMT->execute(['profile_id' => $profile_id]);
         $STMT->setFetchMode(\PDO::FETCH_CLASS, '\\app\\models\\Picture');
         return $STMT->fetchAll();
     }
@@ -38,10 +47,9 @@ class Picture extends \app\core\Model{
         $STMT->execute(['picture_id' => $picture_id]);
     }
 
-    //TODO: check if all instance variables should be updated, check if update is needed.
     public function update(){
-        $SQL = 'UPDATE picture SET picture_id = :picture_id, profile_id = :profile_id, file_name = :file_name, caption = :caption WHERE picture_id = :picture_id';
+        $SQL = 'UPDATE picture SET caption = :caption WHERE picture_id = :picture_id';
         $STMT = self::$_connection->prepare($SQL);
-        $STMT->execute(['picture_id' => $this->picture_id, 'profile_id' => $this->profile_id, 'file_name' => $this->file_name, 'caption' => $this->caption ]);
+        $STMT->execute(['caption' => $this->caption ]);
     }
 }
