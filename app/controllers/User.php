@@ -17,8 +17,7 @@ class User extends \app\core\Controller
 	{
 		if (isset($_POST['action'])) {
 			$user = new \app\models\User();
-			$user = $user->get($_POST['username']);
-
+			$user = $user->get($_POST['user_id']);
 			if ($user != false && password_verify($_POST['password'], $user->password_hash)) {
 				$_SESSION['user_id'] = $user->user_id;
 				$_SESSION['username'] = $user->username;
@@ -50,15 +49,13 @@ class User extends \app\core\Controller
 		\QRcode::png($data);
 	}
 
-
 	#[\app\filters\Login]
 	public function setup2fa()
 	{
 		$secretkey = "";
 		if (isset($_POST['action'])) {
 			$currentcode = $_POST['currentCode'];
-			//echo \app\core\TokenAuth6238::getTokenCode($_SESSION['secretkey']);
-			if (true){//\app\core\TokenAuth6238::verify($_SESSION['secretkey'],$currentcode)) {
+			if (\app\core\TokenAuth6238::verify($_SESSION['secretkey'],$currentcode)) {
 				//the user has verified their proper 2-factor authentication setup
 				$user = new \app\models\User();
 				$user->user_id = $_SESSION['user_id'];

@@ -2,7 +2,7 @@
 namespace app\core;
 /**
  * Encode in Base32 based on RFC 4648.
- * Requires 20% more space than base64  
+ * Requires 20% mo re space than base64  
  * Great for case-insensitive filesystems like Windows and URL's  (except for = char which can be excluded using the pad option for urls)
  *
  * @package default
@@ -34,18 +34,14 @@ class Base32Static {
     public static function encode($input, $padding = true) {
       if(empty($input)) return "";
       
-    //  $input = str_split($input);
-      $input = [$input];
-    
+      $input = str_split($input);
       $binaryString = "";
       
       for($i = 0; $i < count($input); $i++) {
         $binaryString .= str_pad(base_convert(ord($input[$i]), 10, 2), 8, '0', STR_PAD_LEFT);
       }
       
-     // $fiveBitBinaryArray = str_split($binaryString, 5);
-      $fiveBitBinaryArray = [$binaryString, 5];
-
+      $fiveBitBinaryArray = str_split($binaryString, 5);
       $base32 = "";
       $i=0;
       
@@ -78,8 +74,7 @@ class Base32Static {
       }
       
       $input = str_replace('=','', $input);
-     // $input = str_split($input);
-     $input = [$input];
+      $input = str_split($input);
       $binaryString = "";
       
       for($i=0; $i < count($input); $i = $i+8) {
@@ -92,8 +87,6 @@ class Base32Static {
         }
         
         $eightBits = str_split($x, 8);
-        $eightBits = [$x, 8];
-
         
         for($z = 0; $z < count($eightBits); $z++) {
           $binaryString .= ( ($y = chr(base_convert($eightBits[$z], 2, 10))) || ord($y) == 48 ) ? $y:"";

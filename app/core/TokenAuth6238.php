@@ -1,6 +1,7 @@
 <?php
 
 namespace app\core;
+
 // http://www.faqs.org/rfcs/rfc6238.html   
 require_once(dirname(__FILE__) . '/base32static.php');
 class TokenAuth6238
@@ -15,7 +16,6 @@ class TokenAuth6238
   public static function verify($secretkey, $code, $rangein30s = 3)
   {
     $key = base32static::decode($secretkey);
-    echo 'key '.$key;
     $unixtimestamp = time() / 30;
 
     for ($i = - ($rangein30s); $i <= $rangein30s; $i++) {
@@ -161,8 +161,7 @@ class TokenAuth6238
       print "converting hex hash into characters<br/>";
     }
 
-    //$hashcharacters = str_split($hash, 2);
-    $hashcharacters = [$hash, 2];
+    $hashcharacters = str_split($hash, 2);
 
     if ($debug) {
       print_r($hashcharacters);
@@ -197,7 +196,8 @@ class TokenAuth6238
   }
 
   //to avoid using Google API
-  public static function getLocalCodeUrl($username,$domain,$secretkey,$issuer) {
+  public static function getLocalCodeUrl($username, $domain, $secretkey, $issuer)
+  {
     $url = "otpauth://totp/";
     $url .= "$username@$domain";
     $url .= "%3Fsecret%3D$secretkey";

@@ -4,35 +4,50 @@
 	<title>Profile</title>
 </head>
 
-<a href="<?=BASE?>Profile/update">Update Profile</a>
-<a href="<?=BASE?>Message/create/$data[profile]">Create Message</a>
-<a href="<?=BASE?>User/logout">Logout</a>
+<?php
+	$user = new \app\models\User();
+	$user = $user->get($_SESSION['username']);
+	var_dump($user);
+	if (!isset($user->two_factor_authentication_token)){
+		echo "<a href=". BASE ."User/setup2fa>Set up Two Factor Authentication</a>";
+	}
+?>
+ 
+<a href="<?= BASE ?>Profile/update">Update Profile</a>
+<a href="<?= BASE ?>Message/create/$data[profile]">Create Message</a>
+<a href="<?= BASE ?>User/logout">Logout</a>
 
 <body>
 	<h2>First name</h2>
 	<?php
-		$profile = $data['profile'];
-		echo "<h3>$profile->first_name</h3>";
+	$profile = $data['profile'];
+	echo "<h3>$profile->first_name</h3>";
 	?>
 
-<table>
-	<tr><th>From</th><th>Message</th><th>Timestamp</th><th>Actions</th></tr>
-<?php
-foreach($data['messages'] as $message){
+	<table>
+		<tr>
+			<th>From</th>
+			<th>Message</th>
+			<th>Timestamp</th>
+			<th>Actions</th>
+		</tr>
+		<?php
+		foreach ($data['messages'] as $message) {
 
-	echo "<tr>
+			echo "<tr>
 			<td>$message->sender</td>
 			<td>$message->message</td>
 			<td>$message->timestamp</td>
 			<td>
-				<a href='".BASE."Profile/read/$message->message_id'>read</a>
+				<a href='" . BASE . "Profile/read/$message->message_id'>read</a>
 			</td>
 		</tr>";
-}
-?>
-</table>
+		}
+		?>
+	</table>
 
 
 
 </body>
+
 </html>
