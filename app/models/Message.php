@@ -50,4 +50,10 @@ class Message extends \app\core\Model{
         $STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\\models\\Message');
         return $STMT->fetchAll();
     }
+
+    public function delete($message_id){
+		$SQL = 'DELETE FROM message WHERE message_id = :message_id';
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['message_id'=>$message_id]);
+	}
 }

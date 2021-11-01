@@ -38,4 +38,10 @@ class Message extends \app\core\Controller{
         $message->updateRead_status();
         header('location:'.BASE.'Profile/index');
     }
+
+    public function delete($message_id){
+		$message = new \app\models\Message;
+		$message->delete($message_id);
+		header('location:'.BASE.'Profile/index');
+	}
 }
