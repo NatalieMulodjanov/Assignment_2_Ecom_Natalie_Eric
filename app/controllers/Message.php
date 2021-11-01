@@ -22,4 +22,20 @@ class Message extends \app\core\Controller{
         }
 
     }
+
+    public function read($message_id){
+        $message = new \app\models\Message();
+        $message = $message->get($message_id);
+        $message->read_status = 'read';
+        $message->updateRead_status();
+        header('location:'.BASE.'Profile/index');
+    }
+
+    public function to_reread($message_id){
+        $message = new \app\models\Message();
+        $message = $message->get($message_id);
+        $message->read_status = 'to_reread';
+        $message->updateRead_status();
+        header('location:'.BASE.'Profile/index');
+    }
 }
