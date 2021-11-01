@@ -4,6 +4,7 @@ namespace app\controllers;
 class Message extends \app\core\Controller{
 
     #[\app\filters\Login]
+    #[\app\filters\Validate]
     public function create($profile_id){
         if (isset($_POST['action'])){
             $message = new \app\models\Message();

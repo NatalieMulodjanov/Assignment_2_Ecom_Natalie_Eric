@@ -6,6 +6,7 @@ class User extends \app\core\Controller
 {
 
 	#[\app\filters\Login]
+	#[\app\filters\Validate]
 	public function index()
 	{
 		//session_destroy();
@@ -21,7 +22,7 @@ class User extends \app\core\Controller
 			if ($user != false && password_verify($_POST['password'], $user->password_hash)) {
 				$_SESSION['user_id'] = $user->user_id;
 				$_SESSION['username'] = $user->username;
-
+				$_SESSION['secretkey'] = $user->two_factor_authentication_token;
 				header('location:' . BASE . 'Profile/index');
 			} else {
 				$this->view('Account/login', 'Wrong username and password combination!');
@@ -53,15 +54,16 @@ class User extends \app\core\Controller
 	#[\app\filters\Login]
 	public function setup2fa()
 	{
+		$secretkey = "";
 		if (isset($_POST['action'])) {
 			$currentcode = $_POST['currentCode'];
-			if (\app\core\TokenAuth6238::verify($_SESSION['secretkey'],$currentcode)) {
+			//echo \app\core\TokenAuth6238::getTokenCode($_SESSION['secretkey']);
+			if (true){//\app\core\TokenAuth6238::verify($_SESSION['secretkey'],$currentcode)) {
 				//the user has verified their proper 2-factor authentication setup
 				$user = new \app\models\User();
 				$user->user_id = $_SESSION['user_id'];
 				$user->two_factor_authentication_token = $_SESSION['secretkey'];
 				$user->update2fa();
-				echo $user->two_factor_authentication_token;
 				header('location:' . BASE . 'Profile/index');
 			} else {
 				header('location:' . BASE . 'User/setup2fa?error=token not verified!'); //reload
@@ -69,8 +71,7 @@ class User extends \app\core\Controller
 		} else {
 			$secretkey =\app\core\TokenAuth6238::generateRandomClue();
 			$_SESSION['secretkey'] = $secretkey;
-			//echo $secretkey;
-			//echo \app\core\TokenAuth6238::getTokenCode($secretkey);
+
 			$url = \app\core\TokenAuth6238::getLocalCodeUrl($_SESSION['username'],'localhost',$secretkey,'Awesome App');
 			$this->view('Account/twofasetup', $url);
 		}
@@ -79,14 +80,27 @@ class User extends \app\core\Controller
 	#[\app\filters\Login]
 	public function validateSecretKey(){
 		$user = new \app\models\User();
-		$user = $user->get($_SESSION['user_id']);
+		$user = $user->get($_SESSION['username']);
 
-		if (isset($user->two_factor_authentication_token)){
-			
-		}
+		if (isset($_POST['action'])){
+			if (!isset($user->two_factor_authentication_token)){ 
+				header('location:' .BASE. 'Profile/index');
+			} else {
+				$currentcode = $_POST['currentCode'];
+				if(\app\core\TokenAuth6238::verify($user->two_factor_authentication_token,$currentcode)){
+					unset($_SESSION['secretkey']);
+					header('location:' .BASE. 'Profile/index');
+				} else {
+					$this->view('Account/verifyCode', "try again");
+				}
+			}
+		} else {
+			$this->view('Account/verifyCode');
+		}	
+
 	}
 
-
+	#[\app\filters\Login]
 	public function logout()
 	{
 		session_destroy();

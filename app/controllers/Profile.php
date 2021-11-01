@@ -4,6 +4,7 @@ namespace app\controllers;
 class Profile extends \app\core\Controller{
     //is called when loggs in and doesnt have a profile 
     #[\app\filters\Login]
+    #[\app\filters\Validate]
     public function create(){
         if (isset($_POST['action'])){
             $profile = new \app\models\Profile();
@@ -21,6 +22,7 @@ class Profile extends \app\core\Controller{
     }
 
 	#[\app\filters\Login]
+    #[\app\filters\Validate]
     public function index(){
         $user_id = $_SESSION['user_id'];
         $profile = new \app\models\Profile();
@@ -37,6 +39,7 @@ class Profile extends \app\core\Controller{
     }
 
     #[\app\filters\Login]
+    #[\app\filters\Validate]
     public function update(){
         $user_id = $_SESSION['user_id'];
         $profile = new \app\models\Profile();
@@ -58,6 +61,7 @@ class Profile extends \app\core\Controller{
 			$this->view('Profile/update',$profile);
     }
 
+    #[\app\filters\Login]
     public function read(){
         $user_id = $_SESSION['user_id'];
         $profile = new \app\models\Profile();
