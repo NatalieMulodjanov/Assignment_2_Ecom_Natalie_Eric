@@ -7,7 +7,6 @@
 <?php
 	$user = new \app\models\User();
 	$user = $user->get($_SESSION['username']);
-	var_dump($user);
 	if (!isset($user->two_factor_authentication_token)){
 		echo "<a href=". BASE ."User/setup2fa>Set up Two Factor Authentication</a>";
 	}
@@ -33,11 +32,11 @@
 		</tr>
 		<?php
 		foreach ($data['messages'] as $message) {
-
+			$convertedTimeStamp = \app\core\helpers\Helper::ConvertDateTime($message->timestamp);
 			echo "<tr>
 			<td>$message->sender</td>
 			<td>$message->message</td>
-			<td>$message->timestamp</td>
+			<td>$convertedTimeStamp</td>
 			<td>$message->read_status</td>
 			<td>
 				<a href='".BASE."Message/read/$message->message_id'>read</a>

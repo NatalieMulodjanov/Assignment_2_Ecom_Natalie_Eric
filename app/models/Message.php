@@ -23,16 +23,16 @@ class Message extends \app\core\Model{
 
     public function get($message_id){
 		$SQL = 'SELECT * FROM message WHERE message_id = :message_id';
-		$STMT = self::$_connection->query($SQL);
+		$STMT = self::$_connection->prepare($SQL);
         $STMT->execute(['message_id' => $message_id]);
 		$STMT->setFetchMode(\PDO::FETCH_CLASS,'app\\models\\Message');
 		return $STMT->fetch();
 	}
 
     public function updateRead_status(){
-		$SQL = 'UPDATE `message` SET `read_Status`=:read_Status WHERE message_id = :message_id';
+		$SQL = 'UPDATE message SET read_status = :read_status WHERE message_id = :message_id';
 		$STMT = self::$_connection->prepare($SQL);
-		$STMT->execute(['read_Status'=>$this->read_Status]);
+		$STMT->execute(['read_status'=>$this->read_status, 'message_id' => $this->message_id]);
 	}
 
     public function getAllMessagesFromProfileId($profile_id){

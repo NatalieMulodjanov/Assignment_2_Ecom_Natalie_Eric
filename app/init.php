@@ -1,5 +1,10 @@
 <?php
 session_start();
+if (isset($_SESSION['tmezone'])){
+    date_default_timezone_set($_SESSION['tmezone']);
+} else {
+    date_default_timezone_set("America/Montreal");
+}
 //inclusions 
 include('core/autoload.php');
 
