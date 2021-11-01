@@ -26,12 +26,12 @@ class Profile extends \app\core\Controller{
         $profile = new \app\models\Profile();
         $profile = $profile->get($user_id);
         $message =  new \app\models\Message();
-        $allMessages = $message->getAllMessagesFromProfileId($profile->profile_id);
+        $messages = $message->getAllMessagesFromProfileId($profile->profile_id);
         
         if ($profile == false){
             header('location:'.BASE.'Profile/create');
         } else {
-            $this->view('Profile/wall',$allMessages);
+            $this->view('Profile/wall',['profile'=>$profile, 'messages'=>$messages]);
         }
 
     }
