@@ -5,22 +5,23 @@
 </head>
 
 <?php
-	$user = new \app\models\User();
-	$user = $user->get($_SESSION['username']);
-	if (!isset($user->two_factor_authentication_token)){
-		echo "<a href=". BASE ."User/setup2fa>Set up Two Factor Authentication</a>";
-	}
+$user = new \app\models\User();
+$user = $user->get($_SESSION['username']);
+if (!isset($user->two_factor_authentication_token)) {
+	echo "<a href=" . BASE . "User/setup2fa>Set up Two Factor Authentication</a>";
+}
 ?>
- 
+
 <a href="<?= BASE ?>Profile/update">Update Profile</a>
-<a href="<?= BASE ?>Message/create/<?=$data['profile']->profile_id?>">Create Message</a>
+<a href="<?= BASE ?>Message/create/<?= $data['profile']->profile_id ?>">Create Message</a>
+<a href="<?= BASE ?>Picture/index/<?= $data['profile']->profile_id ?>">Post a picture</a>
 <a href="<?= BASE ?>User/logout">Logout</a>
 
 <body>
 	<h2>Profile Name</h2>
 	<?php
-		$profile = $data['profile'];
-		echo "<h3>$profile->first_name $profile->middle_name $profile->last_name</h3>";
+	$profile = $data['profile'];
+	echo "<h3>$profile->first_name $profile->middle_name $profile->last_name</h3>";
 	?>
 
 	<table>
@@ -37,7 +38,7 @@
 			$convertedTimeStamp = \app\core\helpers\Helper::ConvertDateTime($message->timestamp);
 			$senderProfile = new \app\models\Profile();
 			$senderProfile = $senderProfile->get($message->sender);
-			
+
 			echo "<tr>
 			<td>$senderProfile->first_name $senderProfile->last_name</td>
 			<td>$message->message</td>
@@ -45,13 +46,19 @@
 			<td>$message->read_status</td>
 			<td>$message->private_status</td>
 			<td>
-				<a href='".BASE."Message/read/$message->message_id'>read</a>
-				<a href='".BASE."Message/to_reread/$message->message_id'>to reread</a>
+				<a href='" . BASE . "Message/read/$message->message_id'>read</a>
+				<a href='" . BASE . "Message/to_reread/$message->message_id'>to reread</a>
 			</td>
 		</tr>";
 		}
 		?>
 	</table>
+	<h2>Pictures</h2>
+	<?php
+	foreach ($data['pictures'] as $picture) {
+		echo "<img src='$picture->file_name' caption='$picture->caption'/>";
+	}
+	?>
 </body>
 
 </html>

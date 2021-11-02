@@ -35,6 +35,14 @@ class Picture extends \app\core\Model{
         return $STMT->fetch();
     }
 
+    public function getByProfileId($profile_id){
+        $SQL = 'SELECT * FROM picture WHERE profile_id = :profile_id';
+        $STMT = self::$_connection->prepare($SQL);
+        $STMT->execute(['profile_id' => $profile_id]);
+        $STMT->setFetchMode(\PDO::FETCH_CLASS, '\\app\\models\\Picture');
+        return $STMT->fetch();
+    }
+
     public function insert(){
         $SQL = 'INSERT INTO picture(profile_id, file_name, caption) VALUES :profile_id, :file_name, :caption';
         $STMT = self::$_connection->prepare($SQL);

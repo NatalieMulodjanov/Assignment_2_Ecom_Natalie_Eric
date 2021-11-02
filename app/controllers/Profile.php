@@ -28,13 +28,18 @@ class Profile extends \app\core\Controller{
         $profile = new \app\models\Profile();
         $profile = $profile->getByUserId($user_id);
         $message =  new \app\models\Message();
+        $pictures = new \app\models\Picture();
         
+        // $posts = new \app\models\MessagePicture();
+        // echo $profile->profile_id;
+        // var_dump($posts->get($profile->profile_id));
         $messages = $message->getAllMessagesFromProfileId($profile->profile_id);
+        $pictures = $pictures->getByProfileId($profile->profile_id);
         
         if ($profile == false){
             header('location:'.BASE.'Profile/create');
         } else {
-            $this->view('Profile/wall',['profile'=>$profile, 'messages'=>$messages]);
+            $this->view('Profile/wall',['profile'=>$profile, 'messages'=>$messages, 'pictures'=>$pictures]);
         }
 
     }
