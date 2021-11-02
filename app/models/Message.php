@@ -43,6 +43,14 @@ class Message extends \app\core\Model{
         return $STMT->fetchAll();
     }
 
+    public function getAllMessagesSentFromProfileId($profile_id){
+        $SQL = 'SELECT * FROM message WHERE sender = :profile_id';
+        $STMT = self::$_connection->prepare($SQL);
+        $STMT->execute(['profile_id' => $profile_id]);
+        $STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\\models\\Message');
+        return $STMT->fetchAll();
+    }
+
     public function getPublicMessagesFromProfileId($profile_id){
         $SQL = "SELECT * FROM message WHERE receiver = :profile_id AND private_status = 'public' ";
         $STMT = self::$_connection->prepare($SQL);
@@ -50,4 +58,10 @@ class Message extends \app\core\Model{
         $STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\\models\\Message');
         return $STMT->fetchAll();
     }
+
+    public function delete($message_id){
+		$SQL = 'DELETE FROM message WHERE message_id = :message_id';
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['message_id'=>$message_id]);
+	}
 }

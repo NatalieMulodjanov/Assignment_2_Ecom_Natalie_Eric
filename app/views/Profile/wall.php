@@ -13,8 +13,9 @@ if (!isset($user->two_factor_authentication_token)) {
 ?>
 
 <a href="<?= BASE ?>Profile/update">Update Profile</a>
-<a href="<?= BASE ?>Message/create/<?= $data['profile']->profile_id ?>">Create Message</a>
 <a href="<?= BASE ?>Picture/index/<?= $data['profile']->profile_id ?>">Post a picture</a>
+<a href="<?= BASE ?>Message/create/<?=$data['profile']->profile_id?>">Create Message</a>
+<a href="<?= BASE ?>Message/sent/<?=$data['profile']->profile_id?>">Sent Messages</a>
 <a href="<?= BASE ?>User/logout">Logout</a>
 
 <body>
@@ -46,8 +47,9 @@ if (!isset($user->two_factor_authentication_token)) {
 			<td>$message->read_status</td>
 			<td>$message->private_status</td>
 			<td>
-				<a href='" . BASE . "Message/read/$message->message_id'>read</a>
-				<a href='" . BASE . "Message/to_reread/$message->message_id'>to reread</a>
+				<a href='".BASE."Message/read/$message->message_id'>read</a>
+				<a href='".BASE."Message/to_reread/$message->message_id'>to reread</a>
+				<a href='".BASE."Message/delete/$message->message_id'>delete</a>
 			</td>
 		</tr>";
 		}
