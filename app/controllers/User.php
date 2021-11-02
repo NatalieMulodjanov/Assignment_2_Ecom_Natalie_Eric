@@ -45,6 +45,7 @@ class User extends \app\core\Controller
 	}
 
 	// Use: /Default/makeQRCode/pro?data=protocol://address
+	#[\app\filters\Login]
 	public function makeQRCode()
 	{
 		$data = $_GET['data'];

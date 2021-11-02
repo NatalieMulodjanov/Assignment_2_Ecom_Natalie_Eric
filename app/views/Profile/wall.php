@@ -53,9 +53,9 @@ if (!isset($user->two_factor_authentication_token)) {
 			<td>$message->read_status</td>
 			<td>$message->private_status</td>
 			<td>
-				<a href='".BASE."Message/read/$message->message_id'>read</a>
-				<a href='".BASE."Message/to_reread/$message->message_id'>to reread</a>
-				<a href='".BASE."Message/delete/$message->message_id'>delete</a>
+				<a href='" . BASE . "Message/read/$message->message_id'>read</a>
+				<a href='" . BASE . "Message/to_reread/$message->message_id'>to reread</a>
+				<a href='" . BASE . "Message/delete/$message->message_id'>delete</a>
 			</td>
 		</tr>";
 		}

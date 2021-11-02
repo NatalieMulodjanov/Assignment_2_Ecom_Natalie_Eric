@@ -3,6 +3,9 @@ namespace app\controllers;
 
 class Picture extends \app\core\Controller{
 	private $folder='uploads/';
+	
+	#[\app\filters\Login]
+    #[\app\filters\Validate]
 	public function index($profile_id){
 
 		if(isset($_POST['action'])){
@@ -47,6 +50,8 @@ class Picture extends \app\core\Controller{
 		}
 	}
 
+	#[\app\filters\Login]
+    #[\app\filters\Validate]
 	public function edit($picture_id){
 		$picture = new \app\models\Picture();
 		$picture = $picture->get($picture_id);
@@ -60,6 +65,8 @@ class Picture extends \app\core\Controller{
 			$this->view('Profile/update');
 	}
 	
+	#[\app\filters\Login]
+    #[\app\filters\Validate]
 	public function delete($picture_id){
 		$picture = new \app\models\Picture();
 		$profile_id = $picture->get($picture_id);

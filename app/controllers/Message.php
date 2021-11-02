@@ -23,6 +23,8 @@ class Message extends \app\core\Controller{
 
     }
 
+    #[\app\filters\Login]
+    #[\app\filters\Validate]
     public function sent($profile_id){
         $message = new \app\models\Message();
         $messages = $message->getAllMessagesSentFromProfileId($profile_id);
@@ -30,6 +32,8 @@ class Message extends \app\core\Controller{
         $this->view('Message/sent',$messages);
     }
 
+    #[\app\filters\Login]
+    #[\app\filters\Validate]
     public function read($message_id){
         $message = new \app\models\Message();
         $message = $message->get($message_id);
@@ -38,6 +42,8 @@ class Message extends \app\core\Controller{
         header('location:'.BASE.'Profile/index');
     }
 
+    #[\app\filters\Login]
+    #[\app\filters\Validate]
     public function to_reread($message_id){
         $message = new \app\models\Message();
         $message = $message->get($message_id);
@@ -46,6 +52,8 @@ class Message extends \app\core\Controller{
         header('location:'.BASE.'Profile/index');
     }
 
+    #[\app\filters\Login]
+    #[\app\filters\Validate]
     public function delete($message_id){
 		$message = new \app\models\Message;
 		$message->delete($message_id);
