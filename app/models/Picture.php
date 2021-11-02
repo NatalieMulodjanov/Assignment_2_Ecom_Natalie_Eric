@@ -62,15 +62,15 @@ class Picture extends \app\core\Model{
     }
 
     public function delete($picture_id){
-        $SQL = 'DELETE FROM picture WHERE picture_id = :picture_id';
-        $STMT = self::$_connection->prepare($SQL);
-        $STMT->execute(['picture_id' => $picture_id]);
-    }
+		$SQL = 'DELETE FROM picture WHERE picture_id = :picture_id';
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['picture_id'=>$picture_id]);
+	}
 
     public function update(){
         $SQL = 'UPDATE picture SET caption = :caption WHERE picture_id = :picture_id';
         $STMT = self::$_connection->prepare($SQL);
-        $STMT->execute(['caption' => $this->caption ]);
+        $STMT->execute(['caption' => $this->caption,'picture_id' => $this->picture_id]);
     }
 
 

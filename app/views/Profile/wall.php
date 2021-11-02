@@ -86,13 +86,18 @@ if (!isset($user->two_factor_authentication_token)) {
 
 		echo "</br>";
 		echo "<form style='display: inline-block' action='".BASE."Picture_like/like/".$picture->picture_id."' method='post'>
-		<button type='submit'>$likeAmount <i class='fa fa-thumbs-up' style='color: blue; font-size: 20px' aria-hidden='true'></i></button>
-		
+		<button type='submit'>$likeAmount <i class='fa fa-thumbs-up' style='color: red; font-size: 20px' aria-hidden='true'></i></button>
 		</form>";
+
 		echo "<form style='display: inline-block' action='".BASE."Picture_like/unlike/".$picture->picture_id."' method='post'>
-		<button type='submit'><i class='fa fa-thumbs-down' style='color: red; font-size: 20px' aria-hidden='true'></i> </button>
-		
+		<button type='submit'><i class='fa fa-thumbs-down' style='color: blue; font-size: 20px' aria-hidden='true'></i> </button>
 		</form>";
+
+		echo "<td>
+			<a href='" . BASE . "Picture/edit/$picture->picture_id'>edit</a>
+			<a href='" . BASE . "Picture/delete/$picture->picture_id'>delete</a>
+		</td>";
+		
 		echo "</br>";
 		echo "</br>";
 		

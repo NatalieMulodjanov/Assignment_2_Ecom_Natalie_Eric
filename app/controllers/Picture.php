@@ -59,19 +59,17 @@ class Picture extends \app\core\Controller{
 		if(isset($_POST['action'])){
 			$picture->setCaption($_POST['caption']);
 			$picture->update();
-			header('location:/Picture/index');
+			header('location:'.BASE.'Profile/index');
 		} 
 		else
-			$this->view('Profile/update');
+			$this->view('Picture/edit');
 	}
 	
 	#[\app\filters\Login]
     #[\app\filters\Validate]
-	public function delete($picture_id){
-		$picture = new \app\models\Picture();
-		$profile_id = $picture->get($picture_id);
-		$profile_id = $profile_id->profile_id;
+    public function delete($picture_id){
+		$picture = new \app\models\Picture;
 		$picture->delete($picture_id);
-		header('location:/Profile/update/'.$_SESSION['user_id']);
+		header('location:'.BASE.'Profile/index');
 	}
 }

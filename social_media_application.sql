@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 14, 2021 at 10:42 PM
+-- Generation Time: Nov 02, 2021 at 05:39 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.10
 
@@ -144,25 +144,25 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `message`
 --
 ALTER TABLE `message`
-  MODIFY `message_id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `message_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `picture`
 --
 ALTER TABLE `picture`
-  MODIFY `picture_id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `picture_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `profile`
 --
 ALTER TABLE `profile`
-  MODIFY `profile_id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `profile_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables
@@ -172,21 +172,21 @@ ALTER TABLE `user`
 -- Constraints for table `message`
 --
 ALTER TABLE `message`
-  ADD CONSTRAINT `message_ibfk_1` FOREIGN KEY (`sender`) REFERENCES `profile` (`profile_id`),
-  ADD CONSTRAINT `message_ibfk_2` FOREIGN KEY (`receiver`) REFERENCES `profile` (`profile_id`);
+  ADD CONSTRAINT `message_ibfk_1` FOREIGN KEY (`sender`) REFERENCES `profile` (`profile_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `message_ibfk_2` FOREIGN KEY (`receiver`) REFERENCES `profile` (`profile_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `picture`
 --
 ALTER TABLE `picture`
-  ADD CONSTRAINT `picture_ibfk_1` FOREIGN KEY (`profile_id`) REFERENCES `profile` (`profile_id`);
+  ADD CONSTRAINT `picture_ibfk_1` FOREIGN KEY (`profile_id`) REFERENCES `profile` (`profile_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `picture_like`
 --
 ALTER TABLE `picture_like`
-  ADD CONSTRAINT `picture_like_ibfk_1` FOREIGN KEY (`profile_id`) REFERENCES `profile` (`profile_id`),
-  ADD CONSTRAINT `picture_like_ibfk_2` FOREIGN KEY (`picture_id`) REFERENCES `picture` (`picture_id`);
+  ADD CONSTRAINT `picture_like_ibfk_1` FOREIGN KEY (`profile_id`) REFERENCES `profile` (`profile_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `picture_like_ibfk_2` FOREIGN KEY (`picture_id`) REFERENCES `picture` (`picture_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `profile`
