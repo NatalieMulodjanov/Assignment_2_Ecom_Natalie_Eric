@@ -51,7 +51,9 @@ class Picture extends \app\core\Controller
 					$this->view('Picture/index');
 				}
 			}
-		}
+		} else {
+					$this->view('Picture/index');
+				}
 	}
 
 	#[\app\filters\Login]

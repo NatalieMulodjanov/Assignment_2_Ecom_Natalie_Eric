@@ -47,9 +47,9 @@ class User extends \app\core\Model{
 	}
 
 	public function update2fa(){
-		$SQL = 'UPDATE user SET two_factor_authentication_token = :two_factor_authentication_token';
+		$SQL = 'UPDATE user SET two_factor_authentication_token = :two_factor_authentication_token WHERE user_id = :user_id';
 		$STMT = self::$_connection->prepare($SQL);
-		$STMT->execute(['two_factor_authentication_token' => $this->two_factor_authentication_token]);
+		$STMT->execute(['two_factor_authentication_token' => $this->two_factor_authentication_token, 'user_id' => $this->user_id]);
 	}
 
 }
