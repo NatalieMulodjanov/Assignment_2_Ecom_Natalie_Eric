@@ -70,8 +70,7 @@ class Profile extends \app\core\Controller{
 
 
     #[\app\filters\Login]
-    public function update(){
-        $user_id = $_SESSION['user_id'];
+    public function update($profile_id){
         $profile = new \app\models\Profile();
         $profile = $profile->getByUserId($user_id);
         

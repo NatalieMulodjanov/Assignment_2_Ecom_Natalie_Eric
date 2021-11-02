@@ -40,11 +40,11 @@ class Picture extends \app\core\Model{
         $STMT = self::$_connection->prepare($SQL);
         $STMT->execute(['profile_id' => $profile_id]);
         $STMT->setFetchMode(\PDO::FETCH_CLASS, '\\app\\models\\Picture');
-        return $STMT->fetch();
+        return $STMT->fetchAll();
     }
 
     public function insert(){
-        $SQL = 'INSERT INTO picture(profile_id, file_name, caption) VALUES :profile_id, :file_name, :caption';
+        $SQL = 'INSERT INTO picture(profile_id, file_name, caption) VALUES (:profile_id, :file_name, :caption)';
         $STMT = self::$_connection->prepare($SQL);
         $STMT->execute(['profile_id' => $this->profile_id, 'file_name' => $this->file_name, 'caption' => $this->caption]);
     }

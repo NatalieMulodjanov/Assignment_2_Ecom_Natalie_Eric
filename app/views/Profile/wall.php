@@ -58,7 +58,7 @@ if (!isset($user->two_factor_authentication_token)) {
 	<h2>Pictures</h2>
 	<?php
 	foreach ($data['pictures'] as $picture) {
-		echo "<img src='$picture->file_name' caption='$picture->caption'/>";
+		echo "<img src='".BASE."uploads/$picture->file_name' width=300 height=250 caption='$picture->caption'/>";
 	}
 	?>
 </body>

@@ -3,7 +3,7 @@ namespace app\controllers;
 
 class Picture extends \app\core\Controller{
 	private $folder='uploads/';
-	public function index(){
+	public function index($profile_id){
 
 		if(isset($_POST['action'])){
 			if(isset($_FILES['newPicture'])){
@@ -19,11 +19,13 @@ class Picture extends \app\core\Controller{
 					$extension = $mime_type_to_extension[$check['mime']];
 				}else{
 					$this->view('Picture/index', ['error'=>"Bad file type",'picture'=>[]]);
+					echo 'error';
 					return;
 				}
 
 				$filename = uniqid().$extension;
 				$filepath = $this->folder.$filename;
+				echo 'here';
 
 				if($_FILES['newPicture']['size'] > 4000000){
 					$this->view('Picture/index', ['error'=>"File too large",'pictures'=>[]]);
@@ -31,17 +33,17 @@ class Picture extends \app\core\Controller{
 				}
 				if(move_uploaded_file($_FILES['newPicture']['tmp_name'], $filepath)){
 					$picture = new \app\models\Picture();
-					$picture->filename = $filename;
+					$picture->file_name = $filename;
+					$picture->profile_id = $profile_id;
+					$picture->caption = $_POST['caption'];
 					$picture->insert();
-					header('location:/Picture/index');
+					header('location:'.BASE.'/Profile/index');
 				}
 				else
 					echo "There was an error";
 			}
 		}else{
-			$picture = new \app\models\Picture();
-			$pictures = $picture->getAll();
-			$this->view('Picture/index',['error'=>null,'pictures'=>$pictures]);
+			$this->view('Picture/index');
 		}
 	}
 
@@ -53,8 +55,9 @@ class Picture extends \app\core\Controller{
 			$picture->setCaption($_POST['caption']);
 			$picture->update();
 			header('location:/Picture/index');
-		} else
-			$this->view('Profile/update')
+		} 
+		else
+			$this->view('Profile/update');
 	}
 	
 	public function delete($picture_id){
