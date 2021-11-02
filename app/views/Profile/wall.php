@@ -11,7 +11,7 @@
 	<?php
 	$user = new \app\models\User();
 	$user = $user->get($_SESSION['username']);
-	if (!isset($user->two_factor_authentication_token)) {
+	if (!isset($user->two_factor_authentication_token) || empty($user->two_factor_authentication_token)) {
 		echo "<a href=" . BASE . "User/setup2fa>Set up Two Factor Authentication</a>";
 	}
 	?>
