@@ -30,6 +30,14 @@ if (!isset($user->two_factor_authentication_token)) {
 	<?php
 		if ($data['notifications'] == false) {
 			echo "<span>No new notifications.</span>";
+		} else {
+			foreach($data['notifications'] as $notification) {
+				$profile = new \app\models\Profile();
+				$profile = $profile->get($notification->profile_id);
+				$picture = new \app\models\Picture();
+				$picture = $picture->get($notification->picture_id);
+				echo "<span>You have a new notification. $profile->first_name $profile->last_name liked your picture captioned $picture->caption</span>";
+			}
 		}
 	?>
 
@@ -69,13 +77,13 @@ if (!isset($user->two_factor_authentication_token)) {
 	<h2>Pictures</h2>
 	<?php
 	foreach ($data['pictures'] as $picture) {
-		echo "<caption><u>$picture->caption</u></caption>";
 		echo "</br>";
 		echo "<img src='" . BASE . "uploads/$picture->file_name' width=300 height=250 />";
-		$likeAmount = $picture->getLikeAmount($picture->picture_id);
-		if($likeAmount == 0){
-			$likeAmount = 0;
-		}
+		echo "</br>";
+		echo "<caption>$picture->caption</caption>";
+		$picture_like = new \app\models\Picture_like();
+		$likeAmount = $picture_like->getLikeCount($picture->picture_id);
+
 		echo "</br>";
 		echo "<form style='display: inline-block' action='".BASE."Picture_like/like/".$picture->picture_id."' method='post'>
 		<button type='submit'>$likeAmount <i class='fa fa-thumbs-up' style='color: blue; font-size: 20px' aria-hidden='true'></i></button>
