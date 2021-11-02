@@ -11,6 +11,6 @@
 		<input type="submit" name="action">
 	</form>
 	<br><br>
-	<a href="/Profile/update/<?php echo $_SESSION['user_id']?>"><button>Back</button></a>
+	<a href="<?=BASE?>Profile/index"><button>Back</button></a>
 </body>
 </html>
