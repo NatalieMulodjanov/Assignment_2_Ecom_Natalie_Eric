@@ -76,12 +76,13 @@ if (!isset($user->two_factor_authentication_token)) {
 		if($likeAmount == 0){
 			$likeAmount = 0;
 		}
-		echo "<form action='".BASE."Picture_like/like/".$picture->picture_id."' method='post'>
-		<button type='submit'>$likeAmount<i class='fa fa-heart' aria-hidden='true'></i></button>
+		echo "</br>";
+		echo "<form style='display: inline-block' action='".BASE."Picture_like/like/".$picture->picture_id."' method='post'>
+		<button type='submit'>$likeAmount <i class='fa fa-thumbs-up' style='color: blue; font-size: 20px' aria-hidden='true'></i></button>
 		
 		</form>";
-		echo "<form action='".BASE."Picture_like/unlike/".$picture->picture_id."' method='post'>
-		<button type='submit'>69 </button>
+		echo "<form style='display: inline-block' action='".BASE."Picture_like/unlike/".$picture->picture_id."' method='post'>
+		<button type='submit'><i class='fa fa-thumbs-down' style='color: red; font-size: 20px' aria-hidden='true'></i> </button>
 		
 		</form>";
 		echo "</br>";
