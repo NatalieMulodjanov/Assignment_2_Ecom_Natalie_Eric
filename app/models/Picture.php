@@ -43,6 +43,18 @@ class Picture extends \app\core\Model{
         return $STMT->fetchAll();
     }
 
+    public function getLikeAmount($picture_id){
+        $SQL = 'SELECT * FROM picture_like WHERE picture_id = :picture_id';
+        $STMT = self::$_connection->prepare($SQL);
+        $STMT->execute(['picture_id' => $picture_id]);
+        $rows = $STMT->fetchAll();
+        $likeAmount = 0;
+        foreach ($rows as $picture_like){
+            $likeAmount++;
+        }
+        return $likeAmount;
+    }
+
     public function insert(){
         $SQL = 'INSERT INTO picture(profile_id, file_name, caption) VALUES (:profile_id, :file_name, :caption)';
         $STMT = self::$_connection->prepare($SQL);
@@ -60,4 +72,6 @@ class Picture extends \app\core\Model{
         $STMT = self::$_connection->prepare($SQL);
         $STMT->execute(['caption' => $this->caption ]);
     }
+
+
 }

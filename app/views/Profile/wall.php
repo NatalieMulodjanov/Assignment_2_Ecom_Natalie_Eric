@@ -1,7 +1,9 @@
 <html>
 
 <head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<title>Profile</title>
+
 </head>
 
 <?php
@@ -63,14 +65,28 @@ if (!isset($user->two_factor_authentication_token)) {
 		}
 		?>
 	</table>
+	
 	<h2>Pictures</h2>
 	<?php
 	foreach ($data['pictures'] as $picture) {
 		echo "<caption><u>$picture->caption</u></caption>";
 		echo "</br>";
 		echo "<img src='" . BASE . "uploads/$picture->file_name' width=300 height=250 />";
+		$likeAmount = $picture->getLikeAmount($picture->picture_id);
+		if($likeAmount == 0){
+			$likeAmount = 0;
+		}
+		echo "<form action='".BASE."Picture_like/like/".$picture->picture_id."' method='post'>
+		<button type='submit'>$likeAmount<i class='fa fa-heart' aria-hidden='true'></i></button>
+		
+		</form>";
+		echo "<form action='".BASE."Picture_like/unlike/".$picture->picture_id."' method='post'>
+		<button type='submit'>69 </button>
+		
+		</form>";
 		echo "</br>";
 		echo "</br>";
+		
 	}
 	?>
 
@@ -79,9 +95,5 @@ if (!isset($user->two_factor_authentication_token)) {
 		<input type='text' name='searchTerm' value='' />
 		<input type='submit' name='action' value='Search' />
 	</form>
-
-
-
 </body>
-
 </html>
