@@ -11,11 +11,7 @@ class Picture extends \app\core\Controller{
 		do{
 			if(isset($_POST['action'])){
 				if(isset($_FILES['newPicture'])){
-					if(empty($_FILES['newPicture'])){
-						break;
-					} else{
-						$check = getimagesize($_FILES['newPicture']['tmp_name']);
-					}
+					$check = getimagesize($_FILES['newPicture']['tmp_name']);
 	
 					$mime_type_to_extension = ['image/jpeg'=>'.jpg',
 												'image/gif'=>'.gif',
