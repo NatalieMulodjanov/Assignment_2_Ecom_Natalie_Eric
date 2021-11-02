@@ -32,14 +32,19 @@ class Profile extends \app\core\Controller
         $profile = $profile->getByUserId($user_id);
         $message =  new \app\models\Message();
         $pictures = new \app\models\Picture();
+        $picture_likes = new \app\models\Picture_like();
 
         $messages = $message->getAllMessagesFromProfileId($profile->profile_id);
         $pictures = $pictures->getByProfileId($profile->profile_id);
-
+        $notifications = $picture_likes->getAllUnseenNotifications($profile->profile_id);
+        foreach ($notifications as $notification) {
+            $notification->read_status = 'seen';
+            $notification->updateReadStatus();
+        }
         if ($profile == false) {
             header('location:' . BASE . 'Profile/create');
         } else {
-            $this->view('Profile/wall', ['profile' => $profile, 'messages' => $messages, 'pictures' => $pictures]);
+            $this->view('Profile/wall', ['profile' => $profile, 'messages' => $messages, 'pictures' => $pictures, 'notifications' => $notifications]);
         }
     }
 

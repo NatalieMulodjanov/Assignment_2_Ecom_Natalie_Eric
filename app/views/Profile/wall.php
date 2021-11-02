@@ -14,17 +14,25 @@ if (!isset($user->two_factor_authentication_token)) {
 
 <a href="<?= BASE ?>Profile/update">Update Profile</a>
 <a href="<?= BASE ?>Picture/index/<?= $data['profile']->profile_id ?>">Post a picture</a>
-<a href="<?= BASE ?>Message/create/<?= $data['profile']->profile_id ?>">Create Message</a>
+<a href="<?= BASE ?>Message/create">Create Message</a>
 <a href="<?= BASE ?>Message/sent/<?= $data['profile']->profile_id ?>">Sent Messages</a>
 <a href="<?= BASE ?>User/logout">Logout</a>
 
 <body>
-	<h2>Profile Name</h2>
 	<?php
 	$profile = $data['profile'];
-	echo "<h3>$profile->first_name $profile->middle_name $profile->last_name</h3>";
+	echo "<h1>Welcome $profile->first_name $profile->middle_name $profile->last_name</h1>";
 	?>
 
+	<h2>Notifications</h2>
+	<?php
+		if ($data['notifications'] == false) {
+			echo "<span>No new notifications.</span>";
+		}
+	?>
+
+	</br>
+	</br>
 	<table>
 		<tr>
 			<th>From</th>
@@ -58,7 +66,11 @@ if (!isset($user->two_factor_authentication_token)) {
 	<h2>Pictures</h2>
 	<?php
 	foreach ($data['pictures'] as $picture) {
-		echo "<img src='" . BASE . "uploads/$picture->file_name' width=300 height=250 caption='$picture->caption'/>";
+		echo "<caption><u>$picture->caption</u></caption>";
+		echo "</br>";
+		echo "<img src='" . BASE . "uploads/$picture->file_name' width=300 height=250 />";
+		echo "</br>";
+		echo "</br>";
 	}
 	?>
 
