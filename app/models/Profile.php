@@ -58,7 +58,14 @@ class Profile extends \app\core\Model{
         $STMT->setFetchMode(\PDO::FETCH_CLASS,'app\\models\\Profile');
         return $STMT->fetch();
     }
-    
+    public function searchByName($name){
+		$SQL = 'SELECT * FROM profile JOIN user ON user.user_id = profile.user_id WHERE username LIKE (name,'%')';
+        $STMT = self::$_connection->prepare($SQL);
+        $STMT->execute(['username'=>$name]);
+        $STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\\models\\Profile');
+        return $STMT->fetchAll();
+    }
+
     public function update(){
 		$SQL = 'UPDATE `profile` SET `first_name`=:first_name,`middle_name`=:middle_name,`last_name`=:last_name WHERE profile_id = :profile_id';
 		$STMT = self::$_connection->prepare($SQL);
