@@ -23,6 +23,13 @@ class Message extends \app\core\Controller{
 
     }
 
+    public function sent($profile_id){
+        $message = new \app\models\Message();
+        $messages = $message->getAllMessagesSentFromProfileId($profile_id);
+
+        $this->view('Message/sent',$messages);
+    }
+
     public function read($message_id){
         $message = new \app\models\Message();
         $message = $message->get($message_id);

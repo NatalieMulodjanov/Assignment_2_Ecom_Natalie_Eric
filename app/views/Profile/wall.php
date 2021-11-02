@@ -14,6 +14,7 @@
  
 <a href="<?= BASE ?>Profile/update">Update Profile</a>
 <a href="<?= BASE ?>Message/create/<?=$data['profile']->profile_id?>">Create Message</a>
+<a href="<?= BASE ?>Message/sent/<?=$data['profile']->profile_id?>">Sent Messages</a>
 <a href="<?= BASE ?>User/logout">Logout</a>
 
 <body>
