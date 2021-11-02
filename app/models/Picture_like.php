@@ -32,13 +32,13 @@ class Picture_like extends \app\core\Model
 		$STMT->execute(['read_status' => $this->read_status, 'profile_id' => $this->profile_id]);
 	}
 
-	public function getLikeCount($picture_id)
+	public function getLikes($picture_id)
 	{
 		$SQL = 'SELECT * FROM picture_like WHERE picture_id = :picture_id';
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute(['picture_id' => $picture_id]);
 		$STMT->setFetchMode(\PDO::FETCH_CLASS, '\\app\\models\\Picture_like');
-		return count($STMT->fetchAll());
+		return $STMT->fetchAll();
 	}
 
 	public function like()
@@ -47,4 +47,11 @@ class Picture_like extends \app\core\Model
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute(['picture_id' => $this->picture_id, 'profile_id' => $this->profile_id, 'read_status' => $this->read_status, 'timestamp' => $this->timestamp]);
 	}
+
+	public function unlike(){
+		$SQL = 'DELETE FROM picture_like WHERE profile_id = :profile_id AND picture_id = :picture_id';
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['profile_id'=>$this->profile_id, 'picture_id'=>$this->picture_id]);
+	}
+	
 }

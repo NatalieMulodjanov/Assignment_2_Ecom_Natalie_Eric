@@ -27,9 +27,11 @@ class Message extends \app\core\Controller{
 
     #[\app\filters\Login]
     #[\app\filters\Validate]
-    public function sent($profile_id){
+    public function sent(){
+        $profile = new \app\models\Profile();
+        $profile = $profile->getByUserId($_SESSION['user_id']);
         $message = new \app\models\Message();
-        $messages = $message->getAllMessagesSentFromProfileId($profile_id);
+        $messages = $message->getAllMessagesSentFromProfileId($profile->profile_id);
 
         $this->view('Message/sent',$messages);
     }

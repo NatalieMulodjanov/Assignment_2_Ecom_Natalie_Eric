@@ -1,37 +1,40 @@
 <html>
 
 <head>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<title>Profile</title>
 
 </head>
 
-<?php
-$user = new \app\models\User();
-$user = $user->get($_SESSION['username']);
-if (!isset($user->two_factor_authentication_token)) {
-	echo "<a href=" . BASE . "User/setup2fa>Set up Two Factor Authentication</a>";
-}
-?>
-
-<a href="<?= BASE ?>Profile/update">Update Profile</a>
-<a href="<?= BASE ?>Picture/index/<?= $data['profile']->profile_id ?>">Post a picture</a>
-<a href="<?= BASE ?>Message/create">Create Message</a>
-<a href="<?= BASE ?>Message/sent/<?= $data['profile']->profile_id ?>">Sent Messages</a>
-<a href="<?= BASE ?>User/logout">Logout</a>
 
 <body>
+	<?php
+	$user = new \app\models\User();
+	$user = $user->get($_SESSION['username']);
+	if (!isset($user->two_factor_authentication_token)) {
+		echo "<a href=" . BASE . "User/setup2fa>Set up Two Factor Authentication</a>";
+	}
+	?>
+
+	<a href="<?= BASE ?>Profile/update">Update Profile</a>
+	<a href="<?= BASE ?>Picture/index">Post a picture</a>
+	<a href="<?= BASE ?>Message/create">Create Message</a>
+	<a href="<?= BASE ?>Message/sent">Sent Messages</a>
+	<a href="<?= BASE ?>User/logout">Logout</a>
+
 	<?php
 	$profile = $data['profile'];
 	echo "<h1>Welcome $profile->first_name $profile->middle_name $profile->last_name</h1>";
 	?>
 
-	<h2>Notifications</h2>
 	<?php
+	if (isset($data['notifications'])) {
+		echo "<h2>Notifications</h2>";
+
 		if ($data['notifications'] == false) {
 			echo "<span>No new notifications.</span>";
 		} else {
-			foreach($data['notifications'] as $notification) {
+			foreach ($data['notifications'] as $notification) {
 				$profile = new \app\models\Profile();
 				$profile = $profile->get($notification->profile_id);
 				$picture = new \app\models\Picture();
@@ -39,6 +42,7 @@ if (!isset($user->two_factor_authentication_token)) {
 				echo "<span>You have a new notification. $profile->first_name $profile->last_name liked your picture captioned $picture->caption</span>";
 			}
 		}
+	}
 	?>
 
 	</br>
@@ -73,7 +77,7 @@ if (!isset($user->two_factor_authentication_token)) {
 		}
 		?>
 	</table>
-	
+
 	<h2>Pictures</h2>
 	<?php
 	foreach ($data['pictures'] as $picture) {
@@ -82,25 +86,36 @@ if (!isset($user->two_factor_authentication_token)) {
 		echo "</br>";
 		echo "<caption>$picture->caption</caption>";
 		$picture_like = new \app\models\Picture_like();
-		$likeAmount = $picture_like->getLikeCount($picture->picture_id);
-
+		$likes = $picture_like->getLikes($picture->picture_id);
+		$likeAmount = count($likes);
 		echo "</br>";
-		echo "<form style='display: inline-block' action='".BASE."Picture_like/like/".$picture->picture_id."' method='post'>
-		<button type='submit'>$likeAmount <i class='fa fa-thumbs-up' style='color: red; font-size: 20px' aria-hidden='true'></i></button>
-		</form>";
 
-		echo "<form style='display: inline-block' action='".BASE."Picture_like/unlike/".$picture->picture_id."' method='post'>
-		<button type='submit'><i class='fa fa-thumbs-down' style='color: blue; font-size: 20px' aria-hidden='true'></i> </button>
-		</form>";
+		if ($likes == false) {
+			echo "<form style='display: inline-block' action='" . BASE . "Picture_like/like/" . $picture->picture_id . "' method='post'>
+			<button type='submit'>$likeAmount <i class='fa fa-thumbs-up' style='color: blue; font-size: 20px' aria-hidden='true'></i></button>
+			</form>";
+		}
+		foreach ($likes as $like) {
+			if ($like->profile_id == $data['profile']->profile_id) {
+				echo "<form style='display: inline-block' action='" . BASE . "Picture_like/unlike/" . $picture->picture_id . "' method='post'>
+				<button type='submit'>$likeAmount <i class='fa fa-thumbs-down' style='color: red; font-size: 20px' aria-hidden='true'></i> </button>
+				</form>";
+				break;
+			} else {
+				echo "<form style='display: inline-block' action='" . BASE . "Picture_like/like/" . $picture->picture_id . "' method='post'>
+				<button type='submit'>$likeAmount <i class='fa fa-thumbs-up' style='color: blue; font-size: 20px' aria-hidden='true'></i></button>
+				</form>";
+				break;
+			}
+		}
 
 		echo "<td>
 			<a href='" . BASE . "Picture/edit/$picture->picture_id'>edit</a>
 			<a href='" . BASE . "Picture/delete/$picture->picture_id'>delete</a>
 		</td>";
-		
+
 		echo "</br>";
 		echo "</br>";
-		
 	}
 	?>
 
@@ -110,4 +125,5 @@ if (!isset($user->two_factor_authentication_token)) {
 		<input type='submit' name='action' value='Search' />
 	</form>
 </body>
+
 </html>

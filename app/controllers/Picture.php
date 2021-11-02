@@ -3,10 +3,12 @@ namespace app\controllers;
 
 class Picture extends \app\core\Controller{
 	private $folder='uploads/';
-	
+
 	#[\app\filters\Login]
     #[\app\filters\Validate]
-	public function index($profile_id){
+	public function index(){
+		$profile = new \app\models\Profile();
+		$profile = $profile->getByUserId($_SESSION['user_id']);
 
 		if(isset($_POST['action'])){
 			if(isset($_FILES['newPicture'])){
@@ -37,7 +39,7 @@ class Picture extends \app\core\Controller{
 				if(move_uploaded_file($_FILES['newPicture']['tmp_name'], $filepath)){
 					$picture = new \app\models\Picture();
 					$picture->file_name = $filename;
-					$picture->profile_id = $profile_id;
+					$picture->profile_id = $profile->profile_id;
 					$picture->caption = $_POST['caption'];
 					$picture->insert();
 					header('location:'.BASE.'/Profile/index');
