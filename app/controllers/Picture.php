@@ -1,77 +1,80 @@
 <?php
+
 namespace app\controllers;
 
-class Picture extends \app\core\Controller{
-	private $folder='uploads/';
+class Picture extends \app\core\Controller
+{
+	private $folder = 'uploads/';
 
 	#[\app\filters\Login]
-    #[\app\filters\Validate]
-	public function index(){
+	#[\app\filters\Validate]
+	public function index()
+	{
 		$profile = new \app\models\Profile();
 		$profile = $profile->getByUserId($_SESSION['user_id']);
 
-		if(isset($_POST['action'])){
-			if(isset($_FILES['newPicture'])){
+		if (isset($_POST['action'])) {
+			if (isset($_FILES['newPicture'])) {
 				$check = getimagesize($_FILES['newPicture']['tmp_name']);
 
-				$mime_type_to_extension = ['image/jpeg'=>'.jpg',
-											'image/gif'=>'.gif',
-											'image/bmp'=>'.bmp',
-											'image/png'=>'.png'
-											];
+				$mime_type_to_extension = [
+					'image/jpeg' => '.jpg',
+					'image/gif' => '.gif',
+					'image/bmp' => '.bmp',
+					'image/png' => '.png'
+				];
 
-				if($check !== false && isset($mime_type_to_extension[$check['mime']])){
+				if ($check !== false && isset($mime_type_to_extension[$check['mime']])) {
 					$extension = $mime_type_to_extension[$check['mime']];
-				}else{
-					$this->view('Picture/index', ['error'=>"Bad file type",'picture'=>[]]);
+				} else {
+					$this->view('Picture/index', ['error' => "Bad file type", 'picture' => []]);
 					echo 'error';
 					return;
 				}
 
-				$filename = uniqid().$extension;
-				$filepath = $this->folder.$filename;
+				$filename = uniqid() . $extension;
+				$filepath = $this->folder . $filename;
 				echo 'here';
 
-				if($_FILES['newPicture']['size'] > 4000000){
-					$this->view('Picture/index', ['error'=>"File too large",'pictures'=>[]]);
+				if ($_FILES['newPicture']['size'] > 4000000) {
+					$this->view('Picture/index', ['error' => "File too large", 'pictures' => []]);
 					return;
 				}
-				if(move_uploaded_file($_FILES['newPicture']['tmp_name'], $filepath)){
+				if (move_uploaded_file($_FILES['newPicture']['tmp_name'], $filepath)) {
 					$picture = new \app\models\Picture();
 					$picture->file_name = $filename;
 					$picture->profile_id = $profile->profile_id;
 					$picture->caption = $_POST['caption'];
 					$picture->insert();
-					header('location:'.BASE.'/Profile/index');
+					header('location:' . BASE . '/Profile/index');
+				} else {
+					$this->view('Picture/index');
 				}
-				else
-					echo "There was an error";
 			}
-		}else{
-			$this->view('Picture/index');
 		}
 	}
 
 	#[\app\filters\Login]
-    #[\app\filters\Validate]
-	public function edit($picture_id){
+	#[\app\filters\Validate]
+	public function edit($picture_id)
+	{
 		$picture = new \app\models\Picture();
 		$picture = $picture->get($picture_id);
 
-		if(isset($_POST['action'])){
+		if (isset($_POST['action'])) {
 			$picture->setCaption($_POST['caption']);
 			$picture->update();
-			header('location:'.BASE.'Profile/index');
-		} 
-		else
+			header('location:' . BASE . 'Profile/index');
+		} else
 			$this->view('Picture/edit');
 	}
-	
+
 	#[\app\filters\Login]
-    #[\app\filters\Validate]
-    public function delete($picture_id){
+	#[\app\filters\Validate]
+	public function delete($picture_id)
+	{
 		$picture = new \app\models\Picture;
 		$picture->delete($picture_id);
-		header('location:'.BASE.'Profile/index');
+		header('location:' . BASE . 'Profile/index');
 	}
 }
