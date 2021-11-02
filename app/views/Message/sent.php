@@ -4,7 +4,7 @@
 	<title>Sent Messages</title>
 </head>
 
-<a href="<?=BASE?>Profile/index">return</a>
+<a href="<?=BASE?>Profile/index">return</a><br><br>
 
 <body>
 	<table>

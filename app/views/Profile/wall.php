@@ -12,13 +12,19 @@ if (!isset($user->two_factor_authentication_token)) {
 }
 ?>
 
-<a href="<?= BASE ?>Profile/update">Update Profile</a>
-<a href="<?= BASE ?>Picture/index/<?= $data['profile']->profile_id ?>">Post a picture</a>
-<a href="<?= BASE ?>Message/create/<?=$data['profile']->profile_id?>">Create Message</a>
-<a href="<?= BASE ?>Message/sent/<?=$data['profile']->profile_id?>">Sent Messages</a>
-<a href="<?= BASE ?>User/logout">Logout</a>
-
 <body>
+	<a href="<?= BASE ?>Profile/update">Update Profile</a>
+	<a href="<?= BASE ?>Picture/index/<?= $data['profile']->profile_id ?>">Post a picture</a>
+	<a href="<?= BASE ?>Message/create/<?=$data['profile']->profile_id?>">Create Message</a>
+	<a href="<?= BASE ?>Message/sent/<?=$data['profile']->profile_id?>">Sent Messages</a>
+	<a href="<?= BASE ?>User/logout">Logout</a>
+
+	<h3>Search</h3>
+		<form action='/profile/searchByName' method='post'>
+			Name: <input type='text' name='username' value='' />
+			<input type='submit' name='action' value='searchByName' />
+		</form>
+
 	<h2>Profile Name</h2>
 	<?php
 	$profile = $data['profile'];
@@ -55,20 +61,32 @@ if (!isset($user->two_factor_authentication_token)) {
 		}
 		?>
 	</table>
-	<h2>Pictures</h2>
-	<?php
-	foreach ($data['pictures'] as $picture) {
-		echo "<img src='".BASE."uploads/$picture->file_name' width=300 height=250 caption='$picture->caption'/>";
-	}
-	?>
 	
-	//search
-	<h3>Search</h3>
-	<form action='/profile/searchByName' method='post'>
-		Name: <input type='text' name='username' value='' />
-		<input type='submit' name='action' value='searchByName' />
-	</form>
-
+	<h2>Pictures</h2>
+	<table>
+		<tr>
+			<th>Picture</th>
+			<th>Caption</th>
+			<th>Like Amount</th>
+			<th>Actions</th>
+		</tr>
+		<?php
+		foreach ($data['pictures'] as $picture) {
+			$likeAmount = $picture->getLikeAmount($picture->picture_id);
+			if($likeAmount == 0){
+				$likeAmount = 0;
+			}
+			echo "<tr>
+			<td><img src='".BASE."uploads/$picture->file_name' width=300 height=250 caption='$picture->caption'/></td>
+			<td>$picture->caption</td>
+			<td>$likeAmount</td>
+			<td>
+				<a href='".BASE."Picture_like/like/$picture->picture_id'>like</a>
+				<a href='".BASE."Picture_like/unlike/$picture->picture_id'>unlike</a>
+			</td>
+		</tr>";
+		}
+		?>
+	</table>
 </body>
-
 </html>
