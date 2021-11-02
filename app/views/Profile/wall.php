@@ -61,6 +61,14 @@ if (!isset($user->two_factor_authentication_token)) {
 		echo "<img src='".BASE."uploads/$picture->file_name' width=300 height=250 caption='$picture->caption'/>";
 	}
 	?>
+	
+	//search
+	<h3>Search</h3>
+	<form action='/profile/searchByName' method='post'>
+		Name: <input type='text' name='username' value='' />
+		<input type='submit' name='action' value='searchByName' />
+	</form>
+
 </body>
 
 </html>
