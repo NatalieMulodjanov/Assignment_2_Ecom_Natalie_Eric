@@ -8,46 +8,52 @@ class Picture extends \app\core\Controller{
     #[\app\filters\Validate]
 	public function index($profile_id){
 
-		if(isset($_POST['action'])){
-			if(isset($_FILES['newPicture'])){
-				$check = getimagesize($_FILES['newPicture']['tmp_name']);
-
-				$mime_type_to_extension = ['image/jpeg'=>'.jpg',
-											'image/gif'=>'.gif',
-											'image/bmp'=>'.bmp',
-											'image/png'=>'.png'
-											];
-
-				if($check !== false && isset($mime_type_to_extension[$check['mime']])){
-					$extension = $mime_type_to_extension[$check['mime']];
-				}else{
-					$this->view('Picture/index', ['error'=>"Bad file type",'picture'=>[]]);
-					echo 'error';
-					return;
+		do{
+			if(isset($_POST['action'])){
+				if(isset($_FILES['newPicture'])){
+					if(empty($_FILES['newPicture'])){
+						break;
+					} else{
+						$check = getimagesize($_FILES['newPicture']['tmp_name']);
+					}
+	
+					$mime_type_to_extension = ['image/jpeg'=>'.jpg',
+												'image/gif'=>'.gif',
+												'image/bmp'=>'.bmp',
+												'image/png'=>'.png'
+												];
+	
+					if($check !== false && isset($mime_type_to_extension[$check['mime']])){
+						$extension = $mime_type_to_extension[$check['mime']];
+					}else{
+						$this->view('Picture/index', ['error'=>"Bad file type",'picture'=>[]]);
+						echo 'error';
+						return;
+					}
+	
+					$filename = uniqid().$extension;
+					$filepath = $this->folder.$filename;
+					echo 'here';
+	
+					if($_FILES['newPicture']['size'] > 4000000){
+						$this->view('Picture/index', ['error'=>"File too large",'pictures'=>[]]);
+						return;
+					}
+					if(move_uploaded_file($_FILES['newPicture']['tmp_name'], $filepath)){
+						$picture = new \app\models\Picture();
+						$picture->file_name = $filename;
+						$picture->profile_id = $profile_id;
+						$picture->caption = $_POST['caption'];
+						$picture->insert();
+						header('location:'.BASE.'/Profile/index');
+					}
+					else
+						echo "There was an error";
 				}
-
-				$filename = uniqid().$extension;
-				$filepath = $this->folder.$filename;
-				echo 'here';
-
-				if($_FILES['newPicture']['size'] > 4000000){
-					$this->view('Picture/index', ['error'=>"File too large",'pictures'=>[]]);
-					return;
-				}
-				if(move_uploaded_file($_FILES['newPicture']['tmp_name'], $filepath)){
-					$picture = new \app\models\Picture();
-					$picture->file_name = $filename;
-					$picture->profile_id = $profile_id;
-					$picture->caption = $_POST['caption'];
-					$picture->insert();
-					header('location:'.BASE.'/Profile/index');
-				}
-				else
-					echo "There was an error";
+			}else{
+				$this->view('Picture/index');
 			}
-		}else{
-			$this->view('Picture/index');
-		}
+		} while(false);
 	}
 
 	#[\app\filters\Login]
